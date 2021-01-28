@@ -26,6 +26,6 @@ public class GradeEntity {
 	private String name;
 
 	@Column(name = "grade_salary")
-	private double Salary;
+	private double salary;
 
 }
