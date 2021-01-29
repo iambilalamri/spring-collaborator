@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +25,11 @@ public class GradeEntity {
 	private Long id;
 
 	@Column(name = "grade_name")
+	@NotBlank(message = "The grade name is mondatory")
 	private String name;
 
 	@Column(name = "grade_salary")
+	@Min(value = 1500, message = "the salary is invalid")
 	private double salary;
 
 }

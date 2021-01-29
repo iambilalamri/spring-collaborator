@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import amrib.collaborator.entity.BudgetEntity;
 
-@RepositoryRestResource
-public interface BudgetRepository extends JpaRepository<BudgetEntity, Long> {
-
-}
+//@RepositoryRestResource
+//public interface BudgetRepository extends JpaRepository<BudgetEntity, Long> {
+//
+//}

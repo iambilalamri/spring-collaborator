@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -25,13 +26,16 @@ public class CollaboratorEntity {
 	private Long id;
 
 	@Column(name = "first_name")
+	@NotBlank(message = "Firstname is mondatory")
 	private String firstname;
 
 	@Column(name = "last_name")
+	@NotBlank(message = "Lastname is mondatory")
 	private String lastname;
 
 	@Column(name = "email")
 	@NotBlank(message = "The email should not be blank")
+	@Email(message = "The email is invalid")
 	private String email;
 
 	public CollaboratorEntity(String firstname, String lastname, String email) {
