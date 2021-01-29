@@ -2,8 +2,11 @@ package amrib.collaborator.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,37 +20,38 @@ import amrib.collaborator.exception.ResourceNotFoundException;
 import amrib.collaborator.repository.GradeRepository;
 
 @RestController
-@RequestMapping("/api/v1/grade")
+@RequestMapping("/api/v1")
 public class GradeController {
 
 	@Autowired
 	private GradeRepository gradeRepository;
 
-	@GetMapping(value = "/")
+	@GetMapping(value = "/grade")
 	public List<GradeEntity> getGrades() {
 		return gradeRepository.findAll();
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/grade/{id}")
 	public GradeEntity getCollaborator(@PathVariable(value = "id") long id) {
 		return gradeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id" + id));
 	}
 
-	@PostMapping(value = "/")
-	public GradeEntity createGrade(@RequestBody GradeEntity grade) {
+	@PostMapping(value = "/grade")
+	public GradeEntity createGrade(@Valid @RequestBody GradeEntity grade) {
 		return gradeRepository.save(grade);
 	}
 
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = "/grade/{id}")
 	public GradeEntity updateGrade(@RequestBody GradeEntity grade, @PathVariable("id") long id) {
 		GradeEntity existing = gradeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id=" + id));
 		existing.setName(grade.getName());
 		existing.setSalary(grade.getSalary());
 		return this.gradeRepository.save(existing);
 	}
 
+	@DeleteMapping(value = "/grade/{id}")
 	public ResponseEntity<GradeEntity> deleteGrade(@PathVariable(value = "id") long id) {
 
 		GradeEntity existing = gradeRepository.findById(id)
