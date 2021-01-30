@@ -34,7 +34,7 @@ public class CollaboratorController {
 	@GetMapping(value = "/collaborator/{id}")
 	public CollaboratorEntity getCollaborator(@PathVariable(value = "id") long id) {
 		return collaboratorRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id=" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id =" + id));
 	}
 
 	@PostMapping(value = "/collaborator")
@@ -43,10 +43,10 @@ public class CollaboratorController {
 	}
 
 	@PutMapping(value = "/collaborator/{id}")
-	public CollaboratorEntity updateCollaborator(@RequestBody CollaboratorEntity collaborator,
+	public CollaboratorEntity updateCollaborator(@Valid @RequestBody CollaboratorEntity collaborator,
 			@PathVariable("id") long id) {
 		CollaboratorEntity existing = collaboratorRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id = " + id));
 		existing.setFirstname(collaborator.getFirstname());
 		existing.setLastname(collaborator.getLastname());
 		existing.setEmail(collaborator.getEmail());
@@ -57,7 +57,7 @@ public class CollaboratorController {
 	public ResponseEntity<CollaboratorEntity> deleteCollaborator(@PathVariable(value = "id") long id) {
 
 		CollaboratorEntity existing = collaboratorRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id = " + id));
 		this.collaboratorRepository.delete(existing);
 		return ResponseEntity.ok().build();
 	}

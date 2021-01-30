@@ -32,9 +32,10 @@ public class GradeController {
 	}
 
 	@GetMapping(value = "/grade/{id}")
-	public GradeEntity getCollaborator(@PathVariable(value = "id") long id) {
-		return gradeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id" + id));
+	public ResponseEntity<GradeEntity> getCollaborator(@PathVariable(value = "id") long id) {
+		GradeEntity grade = gradeRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id = " + id));
+		return ResponseEntity.ok(grade);
 	}
 
 	@PostMapping(value = "/grade")
@@ -45,7 +46,7 @@ public class GradeController {
 	@PutMapping(value = "/grade/{id}")
 	public GradeEntity updateGrade(@RequestBody GradeEntity grade, @PathVariable("id") long id) {
 		GradeEntity existing = gradeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id=" + id));
+				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id = " + id));
 		existing.setName(grade.getName());
 		existing.setSalary(grade.getSalary());
 		return this.gradeRepository.save(existing);
