@@ -5,11 +5,11 @@ import org.mapstruct.Mapper;
 import amrib.collaborator.dto.CollaboratorDTO;
 import amrib.collaborator.entity.CollaboratorEntity;
 
-
 @Mapper
 public interface CollaboratorMapper {
 
-	public CollaboratorDTO toDto(CollaboratorEntity entity);
+	CollaboratorEntity toEntity(CollaboratorDTO dto);
 
-	public CollaboratorEntity toEntity(CollaboratorDTO dto);
+	CollaboratorDTO toDto(CollaboratorEntity entity);
+
 }
