@@ -20,16 +20,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		// TODO Auto-generated method stub
 
 		Map<String, Object> body = new LinkedHashMap<String, Object>();
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream()
+				.map(x -> "[" + x.getField() + "] : " + x.getDefaultMessage()).collect(Collectors.toList());
+
 		body.put("timestamp", new Date());
 		body.put("status", status.value());
-
-		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(x -> x.getDefaultMessage())
-				.collect(Collectors.toList());
 		body.put("errors", errors);
-		return new ResponseEntity<>(body, headers, status);
+		return new ResponseEntity<>(body, status);
 	}
 
+	
 }
