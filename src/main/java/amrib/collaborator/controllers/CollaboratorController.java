@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.mapstruct.BeanMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +20,17 @@ import amrib.collaborator.entity.CollaboratorEntity;
 import amrib.collaborator.exception.ResourceNotFoundException;
 import amrib.collaborator.mapping.CollaboratorMapper;
 import amrib.collaborator.repository.CollaboratorRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("/api/v1")
 public class CollaboratorController {
 
-	private final CollaboratorRepository collaboratorRepository;
-	// private final CollaboratorMapper collaboratorMapper;
+	@Autowired
+	private CollaboratorRepository collaboratorRepository;
+	@Autowired
+	private CollaboratorMapper collaboratorMapper;
 
 	@GetMapping(value = "/collaborator")
 	public List<CollaboratorEntity> getCollaborators() {
@@ -40,12 +38,12 @@ public class CollaboratorController {
 	}
 
 	@GetMapping(value = "/collaborator/{id}")
-	public CollaboratorEntity getCollaborator(@PathVariable(value = "id") long id) {
+	public CollaboratorDTO getCollaborator(@PathVariable(value = "id") long id) {
 		CollaboratorEntity entity = collaboratorRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id =" + id));
 
 		// return collaboratorMapper.toDto(entity);
-		return entity;
+		return collaboratorMapper.toDto(entity);
 	}
 
 	@PostMapping(value = "/collaborator")

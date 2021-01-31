@@ -1,14 +1,28 @@
 package amrib.collaborator.mapping;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 import amrib.collaborator.dto.CollaboratorDTO;
 import amrib.collaborator.entity.CollaboratorEntity;
 
-@Mapper
-public interface CollaboratorMapper {
+@Component
+public class CollaboratorMapper {
+	
+	public CollaboratorMapper() {
+		// TODO Auto-generated constructor stub
+	}
 
-	public CollaboratorEntity toEntity(CollaboratorDTO dto);
+	public CollaboratorDTO toDto(CollaboratorEntity entity) {
+		if (entity == null) {
+			return null;
+		}
+		return new CollaboratorDTO(entity.getFirstname(), entity.getLastname(), entity.getEmail());
+	}
 
-	public CollaboratorDTO toDto(CollaboratorEntity entity);
+	public static CollaboratorEntity toEntity(CollaboratorDTO dto) {
+		if (dto == null) {
+			return null;
+		}
+		return new CollaboratorEntity(dto.getFirstname(), dto.getLastname(), dto.getEmail());
+	}
 }
