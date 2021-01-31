@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import amrib.collaborator.dto.CollaboratorDTO;
 import amrib.collaborator.entity.CollaboratorEntity;
 import amrib.collaborator.exception.ResourceNotFoundException;
 import amrib.collaborator.repository.CollaboratorRepository;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class CollaboratorController {
@@ -33,8 +36,11 @@ public class CollaboratorController {
 
 	@GetMapping(value = "/collaborator/{id}")
 	public CollaboratorEntity getCollaborator(@PathVariable(value = "id") long id) {
-		return collaboratorRepository.findById(id)
+		CollaboratorEntity entity = collaboratorRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id =" + id));
+
+		// return collaboratorMapper.toDto(entity);
+		return entity;
 	}
 
 	@PostMapping(value = "/collaborator")

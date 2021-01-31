@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class CollaboratorDTO {
 	
-	private Long id;
 	private String firstname;
 	private String lastname;
 	private String email;
