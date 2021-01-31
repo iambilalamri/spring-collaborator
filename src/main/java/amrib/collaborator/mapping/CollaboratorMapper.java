@@ -8,8 +8,7 @@ import amrib.collaborator.entity.CollaboratorEntity;
 @Mapper
 public interface CollaboratorMapper {
 
-	CollaboratorEntity toEntity(CollaboratorDTO dto);
+	public CollaboratorEntity toEntity(CollaboratorDTO dto);
 
-	CollaboratorDTO toDto(CollaboratorEntity entity);
-
+	public CollaboratorDTO toDto(CollaboratorEntity entity);
 }

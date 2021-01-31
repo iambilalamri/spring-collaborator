@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.mapstruct.BeanMapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 import amrib.collaborator.dto.CollaboratorDTO;
 import amrib.collaborator.entity.CollaboratorEntity;
 import amrib.collaborator.exception.ResourceNotFoundException;
+import amrib.collaborator.mapping.CollaboratorMapper;
 import amrib.collaborator.repository.CollaboratorRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class CollaboratorController {
 
-	@Autowired
-	private CollaboratorRepository collaboratorRepository;
+	private final CollaboratorRepository collaboratorRepository;
+	// private final CollaboratorMapper collaboratorMapper;
 
 	@GetMapping(value = "/collaborator")
 	public List<CollaboratorEntity> getCollaborators() {
