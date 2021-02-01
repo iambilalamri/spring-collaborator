@@ -1,6 +1,5 @@
 package amrib.collaborator.entity;
 
-import javax.persistence.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
