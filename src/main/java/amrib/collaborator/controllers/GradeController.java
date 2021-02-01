@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import amrib.collaborator.entity.GradeEntity;
 import amrib.collaborator.exception.ResourceNotFoundException;
 import amrib.collaborator.repository.GradeRepository;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1")
