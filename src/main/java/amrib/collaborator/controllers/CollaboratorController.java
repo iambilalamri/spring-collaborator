@@ -20,7 +20,6 @@ import amrib.collaborator.entity.CollaboratorEntity;
 import amrib.collaborator.exception.ResourceNotFoundException;
 import amrib.collaborator.mapping.CollaboratorMapper;
 import amrib.collaborator.repository.CollaboratorRepository;
-import lombok.RequiredArgsConstructor;
 
 
 @RestController
@@ -29,8 +28,6 @@ public class CollaboratorController {
 
 	@Autowired
 	private CollaboratorRepository collaboratorRepository;
-	@Autowired
-	private CollaboratorMapper collaboratorMapper;
 
 	@GetMapping(value = "/collaborator")
 	public List<CollaboratorEntity> getCollaborators() {
@@ -42,8 +39,7 @@ public class CollaboratorController {
 		CollaboratorEntity entity = collaboratorRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id =" + id));
 
-		// return collaboratorMapper.toDto(entity);
-		return collaboratorMapper.toDto(entity);
+		return CollaboratorMapper.toDto(entity);
 	}
 
 	@PostMapping(value = "/collaborator")
