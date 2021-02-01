@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import amrib.collaborator.entity.GradeEntity;
 import amrib.collaborator.exception.ResourceNotFoundException;
 import amrib.collaborator.repository.GradeRepository;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -32,9 +34,16 @@ public class GradeController {
 	}
 
 	@GetMapping(value = "/grade/{id}")
-	public ResponseEntity<GradeEntity> getCollaborator(@PathVariable(value = "id") long id) {
+	public ResponseEntity<GradeEntity> getGrade(@PathVariable(value = "id") long id) {
 		GradeEntity grade = gradeRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id = " + id));
+		return ResponseEntity.ok(grade);
+	}
+
+	@GetMapping(value = "/grade/find")
+	public ResponseEntity<GradeEntity> getGradeByName(@RequestParam(name = "name") String name) {
+		GradeEntity grade = gradeRepository.findGradeByName(name)
+				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with name = " + name));
 		return ResponseEntity.ok(grade);
 	}
 

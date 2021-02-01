@@ -7,12 +7,8 @@ import amrib.collaborator.entity.CollaboratorEntity;
 
 @Component
 public class CollaboratorMapper {
-	
-	public CollaboratorMapper() {
-		// TODO Auto-generated constructor stub
-	}
 
-	public CollaboratorDTO toDto(CollaboratorEntity entity) {
+	public static CollaboratorDTO toDto(CollaboratorEntity entity) {
 		if (entity == null) {
 			return null;
 		}
