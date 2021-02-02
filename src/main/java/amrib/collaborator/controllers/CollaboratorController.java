@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,10 +36,19 @@ public class CollaboratorController {
 	}
 
 	@GetMapping(value = "/collaborator/{id}")
+	@Cacheable("collaborator")
 	public CollaboratorDTO getCollaborator(@PathVariable(value = "id") long id) {
+		
 		CollaboratorEntity entity = collaboratorRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id =" + id));
-
+		System.out.println("Going to sleep for 5 Secs.. to simulate backend call.");
+        try {
+        	// To check if the @Cacheable decorator works
+			Thread.sleep(1000*5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return CollaboratorMapper.toDto(entity);
 	}
 

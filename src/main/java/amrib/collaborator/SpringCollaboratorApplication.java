@@ -2,6 +2,7 @@ package amrib.collaborator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ class Config {
 }
 
 @SpringBootApplication
+@EnableCaching
 public class SpringCollaboratorApplication {
 	/**
 	 * @param args
@@ -29,10 +31,10 @@ public class SpringCollaboratorApplication {
 	public static void verifyValueOfBeans() {
 		@SuppressWarnings("resource")
 		ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		System.out.println("Hello World");
+		System.out.println("**** Hello World ****");
 		CompanyEntity ent = context.getBean("companyEntity", CompanyEntity.class);
-		System.out.println(ent.getAddress().getStreet());
-		System.out.println(ent.getAddress().getNumber());
+		System.out.println("Bean value 1 = " + ent.getAddress().getStreet());
+		System.out.println("Bean value 2 = " + ent.getAddress().getNumber());
 	}
 
 	public static void main(String[] args) {
