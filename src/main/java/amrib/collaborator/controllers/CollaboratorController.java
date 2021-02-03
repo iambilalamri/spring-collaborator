@@ -46,7 +46,6 @@ public class CollaboratorController {
 			// To check if the @Cacheable decorator works
 			Thread.sleep(1000 * 5);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return CollaboratorMapper.toDto(entity);
@@ -54,18 +53,22 @@ public class CollaboratorController {
 
 	@PostMapping(value = "/collaborator")
 	public CollaboratorEntity createCollaborator(@Valid @RequestBody CollaboratorEntity collaborator) {
+		if (collaborator == null)
+			return null;
 		return collaboratorRepository.save(collaborator);
+
 	}
 
 	@PutMapping(value = "/collaborator/{id}")
 	public CollaboratorEntity updateCollaborator(@Valid @RequestBody CollaboratorEntity collaborator,
 			@PathVariable("id") long id) {
-		CollaboratorEntity existing = collaboratorRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id = " + id));
-		existing.setFirstname(collaborator.getFirstname());
-		existing.setLastname(collaborator.getLastname());
-		existing.setEmail(collaborator.getEmail());
-		return this.collaboratorRepository.save(existing);
+		return collaboratorRepository.findById(id).map(existing -> {
+			existing.setFirstname(collaborator.getFirstname());
+			existing.setLastname(collaborator.getLastname());
+			existing.setEmail(collaborator.getEmail());
+			return this.collaboratorRepository.save(existing);
+		}).orElseThrow(() -> new ResourceNotFoundException("Collaborator not found with id = " + id));
+
 	}
 
 	@DeleteMapping(value = "/collaborator/{id}")

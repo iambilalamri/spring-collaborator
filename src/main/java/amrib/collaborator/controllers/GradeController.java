@@ -39,7 +39,7 @@ public class GradeController {
 		return ResponseEntity.ok(grade);
 	}
 
-	@GetMapping(value = "/grade/find")
+	@GetMapping(value = "/grade/findBy")
 	public ResponseEntity<GradeEntity> getGradeByName(@RequestParam(name = "name") String name) {
 		GradeEntity grade = gradeRepository.findGradeByName(name)
 				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with name = " + name));
@@ -53,11 +53,11 @@ public class GradeController {
 
 	@PutMapping(value = "/grade/{id}")
 	public GradeEntity updateGrade(@RequestBody GradeEntity grade, @PathVariable("id") long id) {
-		GradeEntity existing = gradeRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Grade not found with id = " + id));
-		existing.setName(grade.getName());
-		existing.setSalary(grade.getSalary());
-		return this.gradeRepository.save(existing);
+		return gradeRepository.findById(id).map(existing -> {
+			existing.setName(grade.getName());
+			existing.setSalary(grade.getSalary());
+			return this.gradeRepository.save(existing);
+		}).orElseThrow(() -> new ResourceNotFoundException("Grade not found with id = " + id));
 	}
 
 	@DeleteMapping(value = "/grade/{id}")
