@@ -1,6 +1,7 @@
 package amrib.collaborator.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -31,8 +32,8 @@ public class CollaboratorController {
 	private CollaboratorRepository collaboratorRepository;
 
 	@GetMapping(value = "/collaborator")
-	public List<CollaboratorEntity> getCollaborators() {
-		return collaboratorRepository.findAll();
+	public List<CollaboratorDTO> getCollaborators() {
+		return collaboratorRepository.findAll().stream().map(CollaboratorMapper::toDto).collect(Collectors.toList());
 	}
 
 	@GetMapping(value = "/collaborator/{id}")
