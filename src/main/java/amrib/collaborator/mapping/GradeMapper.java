@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import amrib.collaborator.dto.GradeDTO;
 import amrib.collaborator.entity.GradeEntity;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface GradeMapper {
 
 	public GradeDTO toDto(GradeEntity entity);
